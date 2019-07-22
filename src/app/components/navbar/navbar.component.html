@@ -1,0 +1,10 @@
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand">Navbar</a>
+  <div class="pull-right">
+    <a *ngIf="!loginStatus" routerLink="signup" class="navbar-brand">Signup</a>
+    <a *ngIf="loginStatus" routerLink="profile" class="navbar-brand">Profile</a>
+    <a *ngIf="!loginStatus" routerLink="login" class="navbar-brand">Login</a>
+    <a href="#" *ngIf="loginStatus" (click)="logout()" class="navbar-brand">Logout</a>
+  </div>
+
+</nav>

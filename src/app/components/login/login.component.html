@@ -1,0 +1,39 @@
+<div class="mt-4 col-8 offset-2">
+  <div class="card">
+    <div class="card-header">Login</div>
+    <div class="card-body">
+      <form #loginForm="ngForm" (ngSubmit)="handleLogin()">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="text"
+            class="form-control"
+            name="userEmail"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            [(ngModel)]="userCredential.email"
+            placeholder="Enter email"
+            required>
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password"
+            class="form-control"
+            name="userPassword"
+            id="exampleInputPassword1"
+            placeholder="Password"
+            [(ngModel)]="userCredential.password"
+            required>
+        </div>
+
+
+        <div class="d-flex justify-content-between">
+          <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Sign In</button>
+          <a class="btn btn-info" routerLink="/signup">Signup</a>
+        </div>
+
+        <small><a routerLink="/request-password-reset">Forgot password?</a></small>
+      </form>
+    </div>
+  </div>
+</div>
