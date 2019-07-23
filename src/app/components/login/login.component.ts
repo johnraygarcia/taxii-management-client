@@ -18,6 +18,11 @@ export class LoginComponent implements OnInit {
     password: string
   };
 
+  public error = {
+    invalid: false,
+    message: 'Login Failed. Please check your email or password and try again.'
+  }
+
   constructor(
     private userService: UserService,
     private tokenService: TokenService,
@@ -42,9 +47,7 @@ export class LoginComponent implements OnInit {
   handleLogin() {
     this.userService.login(this.userCredential).subscribe((data) => {
       this.handleResponse(data);
-    }, (error) => {
-      console.log(error);
-    });
+    }, (error) => this.handleError());
   }
 
   handleResponse(loginResponse) {
@@ -53,5 +56,9 @@ export class LoginComponent implements OnInit {
     if (this.tokenService.isValid()) {
       this.authService.changeStatus(true);
     }
+  }
+
+  handleError() {
+    this.error.invalid = true;
   }
 }

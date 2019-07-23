@@ -2,6 +2,8 @@
   <div class="card">
     <div class="card-header">Login</div>
     <div class="card-body">
+
+      <div class="alert alert-warning" *ngIf="error.invalid">{{ error.message }}</div>
       <form #loginForm="ngForm" (ngSubmit)="handleLogin()">
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
@@ -13,7 +15,6 @@
             [(ngModel)]="userCredential.email"
             placeholder="Enter email"
             required>
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Password</label>

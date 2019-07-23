@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { SnotifyService } from 'ng-snotify';
 
@@ -10,7 +10,10 @@ import { SnotifyService } from 'ng-snotify';
 })
 export class SetNewPasswordComponent implements OnInit {
 
-  public error = [];
+  public errors = {
+    password: null,
+    message: null
+  };
 
   public form = {
     email: null,
@@ -22,7 +25,8 @@ export class SetNewPasswordComponent implements OnInit {
   constructor(
       private route: ActivatedRoute,
       private userService: UserService,
-      private snotify: SnotifyService
+      private snotify: SnotifyService,
+      private router: Router
     ) {
     route.queryParams.subscribe(params => {
       this.form.reset_token = params['token'];
@@ -48,15 +52,24 @@ export class SetNewPasswordComponent implements OnInit {
       closeOnClick: true,
       pauseOnHover: true
     });
+
+    setTimeout(() => {
+      this.router.navigateByUrl('/login');
+    }, 1000);
   }
 
   handleErrorResponse(responseData) {
-    this.snotify.success('Ooopps! Looks like there is a problem in our service. We will check this first.', 'Error.', {
-      timeout: 2000,
-      showProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true
-    });
-  }
 
+    if (responseData.errors.password.length) {
+      this.errors.password = responseData.errors.password;
+      this.errors.message = responseData.data;
+    } else {
+      this.snotify.success(responseData.message, 'Error.', {
+        timeout: 2000,
+        showProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true
+      });
+    }
+  }
 }
